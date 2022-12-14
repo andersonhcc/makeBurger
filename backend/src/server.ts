@@ -1,6 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
+import path from 'path';
+
 
 import { router } from './routes';
 
@@ -9,6 +11,11 @@ app.use(express.json()); //utilizar json no node
 app.use(cors()); // qualquer ip pode acessar
 
 app.use(router);
+
+app.use(
+  '/files',
+  express.static(path.resolve(__dirname, '../', 'tmp'))
+) //criando uma rota estática para pegar as fotos
 
 
 
