@@ -1,18 +1,18 @@
 export default {
   colors: {
     white: "#fff",
-    gray: "#8B8F92",
-    primary: "#BBF426",
-    shape: "#192126",
-
-    secondary: "#A48AED",
+    gray: "#9FA3A6",
+    primary: "#FFC859",
+    shape: "#1D1D2E",
+    black: '#000000',
+    attention: "#FF3F4B",
+    secondary: "#3FFFA3",
   },
 
   fonts:{
-    ptSantsBold: "PTSans_700Bold",
-    regular: "Lato_400Regular",
-    light: "Lato_300Light",
-    bold: "PLato_700Bold",
-    italic: "Lato_400Regular_Italic",
+    regular: "Poppins_400Regular",
+    medium: "Poppins_600SemiBold",
+    bold: "Poppins_700Bold",
+    italic: "Poppins_400Regular_Italic",
   },
 };
