@@ -48,6 +48,9 @@ export default function App() {
       await SplashScreen.hideAsync();
     }
   }, [fontsLoaded]);
+
+  if (!fontsLoaded) return null;
+
   
   return (
     <ThemeProvider theme={themes}>
