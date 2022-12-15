@@ -3,10 +3,13 @@ export default {
     white: "#fff",
     gray: "#9FA3A6",
     primary: "#FFC859",
-    shape: "#1D1D2E",
+    background: "#1D1D2E",
+    shape: "#101026",
     black: '#000000',
     attention: "#FF3F4B",
     secondary: "#3FFFA3",
+    color_borda: '#302F3C',
+
   },
 
   fonts:{
