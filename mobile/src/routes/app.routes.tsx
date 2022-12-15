@@ -1,7 +1,9 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { SceneName } from "./scene-name";
 
 import { Dashboard } from "../screens/Dashboard";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -10,7 +12,7 @@ export function AppRoutes() {
     
     <Stack.Navigator>
       
-      <Stack.Screen name="Dashboard" component={Dashboard} />
+      <Stack.Screen name={SceneName.Dashboard} component={Dashboard} />
     
     </Stack.Navigator>
   )
