@@ -14,7 +14,7 @@ export function Routes (){
 
     if(loading){
       return(
-        <Loading color={theme.colors.primary} size='large'/>
+        <Loading color={theme.colors.white} size='large'/>
       )
     }
 
