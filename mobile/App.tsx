@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { useColorScheme } from 'react-native';
+import { useColorScheme, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { Routes } from './src/routes';
 import { ThemeProvider } from "styled-components";
@@ -53,6 +53,12 @@ export default function App() {
 
   return (
     <ThemeProvider theme={themes}>
+      <StatusBar 
+        translucent
+        backgroundColor="transparent"
+        barStyle='light-content'
+      />
+
       <NavigationContainer >
         <AuthProvider>
           <Routes />

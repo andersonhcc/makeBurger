@@ -19,8 +19,8 @@ import {
 export function SignIn() {
   const theme = useTheme();
   const { signIn, loadingAuth } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('teste@teste.com');
+  const [password, setPassword] = useState('123123');
 
   async function handleLogin(){
     if(email === '' || password === ''){
