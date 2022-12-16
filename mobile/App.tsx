@@ -8,8 +8,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { LightTheme, DarkTheme } from './src/themes';
 
 
-import dark from './src/themes/dark';
-
+import { AuthProvider } from './src/context/AuthContext';
 
 
 SplashScreen.preventAutoHideAsync();
@@ -27,7 +26,7 @@ import {
 
 export default function App() {
   const deviceColor = useColorScheme();
-  
+
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_400Regular_Italic,
@@ -35,14 +34,14 @@ export default function App() {
     Poppins_700Bold
   });
 
-  
+
   const themes = useMemo(() => {
     if (!deviceColor) return LightTheme;
     return deviceColor === "dark" ? DarkTheme : LightTheme;
   }, [deviceColor]);
 
-  
-  
+
+
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();
@@ -51,12 +50,14 @@ export default function App() {
 
   if (!fontsLoaded) return null;
 
-  
+
   return (
     <ThemeProvider theme={themes}>
-    <NavigationContainer >
-      <Routes />
-    </NavigationContainer>
+      <NavigationContainer >
+        <AuthProvider>
+          <Routes />
+        </AuthProvider>
+      </NavigationContainer>
     </ThemeProvider>
   );
 }
