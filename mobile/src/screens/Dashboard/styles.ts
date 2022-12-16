@@ -35,6 +35,12 @@ export const IconExit = styled(Ionicons).attrs({
 
 export const WrapperIcon = styled.TouchableOpacity``;
 
+export const Main = styled.View`
+  flex:1;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const ImageMain = styled.Image`
   width: 400px;
   height: 400px;

@@ -4,6 +4,8 @@ import { RFValue } from 'react-native-responsive-fontsize';
 interface Props {
   marginTop?: number;
   backgroundColor?: string;
+  height: number;
+  width: number;
 }
 
 export const Container = styled.TouchableOpacity<Props>`
@@ -11,8 +13,10 @@ export const Container = styled.TouchableOpacity<Props>`
   
   ${({backgroundColor, theme}) => backgroundColor ? css`background-color: ${backgroundColor};` : css`${theme.colors.primary};`};
 
-  width: ${RFValue(300)}px;
-  height: ${RFValue(50)}px;
+  ${({ width}) => width ? css`width: ${RFValue(width)}px;` : css`width: ${RFValue(300)}px;`}
+  
+  ${({ height }) => height ? css`height: ${RFValue(height)}px;` : css`height: ${RFValue(50)}px;`}
+  
   opacity: ${({ disabled }) => disabled ? 0.5 : 1};
   border-radius: 7px;
   align-items: center;

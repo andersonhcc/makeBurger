@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Text } from '../../components/Text';
 import { useTheme } from 'styled-components';
 
+import { Button } from '../../components/Button';
 
 import {
   Container,
@@ -13,6 +14,7 @@ import {
   ImageProfile,
   WrapperIcon,
   IconExit,
+  Main,
   ImageMain,
 } from './styles';
 
@@ -35,16 +37,30 @@ export function Dashboard() {
         </WrapperImage>
 
         <Text size={20}>Olá, {user.name} </Text>
-        
+
         <WrapperIcon onPress={signOut}>
           <IconExit />
         </WrapperIcon>
-
-
       </Header>
 
-    
-      <ImageMain source={require('../../assets/images/cadastrarpedido.png')}/>
+
+      <Main>
+        <Text
+        size={20}
+        >
+          Que tal abrir um novo pedido?
+        </Text>
+        
+        <ImageMain source={require('../../assets/images/Waiters.gif')} />
+
+        <Button
+          title="Abrir pedido"
+          backgroundColor={theme.colors.primary}
+          width={250}
+          height={45}
+          fontSize={16}
+        />
+      </Main>
 
 
     </Container>

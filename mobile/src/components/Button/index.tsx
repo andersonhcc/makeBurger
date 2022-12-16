@@ -13,6 +13,9 @@ interface PropsButton extends TouchableOpacityProps{
   title: string;
   disabled?: boolean;
   isLoading?: boolean;
+  width?: number;
+  height?: number;
+  fontSize?: number;
 }
 
 export function Button({
@@ -21,6 +24,9 @@ export function Button({
   backgroundColor, 
   isLoading,
   disabled,
+  width,
+  height,
+  fontSize,
   ...props} 
 : PropsButton){
   
@@ -29,6 +35,8 @@ export function Button({
   return (
     <Container
       marginTop={marginTop}
+      width={width}
+      height={height}
       disabled={disabled}
       activeOpacity={0.5}
       backgroundColor={backgroundColor}
@@ -40,7 +48,7 @@ export function Button({
         : 
         <Text 
         color={theme.colors.white}
-        size={20}
+        size={fontSize ? fontSize : 20}
         >
           {title}
         </Text>

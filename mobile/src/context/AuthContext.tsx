@@ -1,4 +1,5 @@
 import React, { useState, createContext, ReactNode, useContext, useEffect } from "react";
+import { Alert } from "react-native";
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -98,6 +99,7 @@ function AuthProvider({ children }: IAuthProvider) {
 
     } catch (error) {
       console.log('Error: ' + error);
+      Alert.alert('Entrar', 'Email e/ou senha incorretos');
       setLoadingAuth(false);
     }
   }
