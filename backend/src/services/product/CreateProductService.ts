@@ -18,6 +18,7 @@ class CreateProductService {
     price,
   } : ICreateProduct){
 
+    
     const product = await prismaClient.product.create({
       data:{
         name,
