@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Alert } from 'react-native';
 
 import { Text } from '../../components/Text';
 import { Button } from '../../components/Button';
+import { DropCategories } from '../../components/DropCategories';
+import { MenuFoods } from '../../components/MenuFoods';
 
 import { useTheme } from 'styled-components';
 import { useRoute } from '@react-navigation/native';
@@ -35,12 +37,38 @@ interface Props {
   order_id: string;
 }
 
+export interface ICategory {
+  name: string;
+  id: string;
+}
+
+export interface IProduct {
+  name: string;
+  id: string;
+  description: string;
+  banner: any;
+  price: string;
+}
+
 export function OrderDetails() {
   const theme = useTheme();
   const { params } = useRoute();
   const navigation = useNavigation();
   const { orderNumber, order_id } = params as Props;
-  const [visible, setVisible] = useState(false);
+  
+  const [visibleMenu, setVisibleMenu] = useState(false);
+  const [visibleDrop, setVisibleDrop] = useState(false);
+
+
+  const [categories, setCategories] = useState<ICategory[] | []>([]);
+  const [categorySelected, setCategorySelected] = useState({} as ICategory);
+
+  const [product, setProduct] = useState<IProduct[] | []>([]);
+  const [productSelected, setProductSelected] = useState({} as ICategory);
+
+
+
+  const [amount, setAmount] = useState('1');
 
 
   async function handleDeleteOrder() {
@@ -57,9 +85,42 @@ export function OrderDetails() {
     }
   }
 
+
   function finishRequest(){
     navigation.navigate(SceneName.FinishOrder);
   }
+
+
+  useEffect(() => {
+    async function getCategories(){
+      
+      const response = await api.get('/category');
+
+      setCategories(response.data);
+      setCategorySelected(response.data[0]);
+    }
+
+    getCategories()
+
+  },[])
+
+  useEffect(() => { 
+    async function getProductsSelected(){ 
+      const response = await api.get('category/product', {
+        params: {
+          category_id: categorySelected.id,
+        }
+      })
+
+      setProduct(response.data);
+
+    }
+
+    getProductsSelected();
+
+
+  }, [categorySelected])
+
 
   return (
     <Container>
@@ -78,23 +139,24 @@ export function OrderDetails() {
         <WrapperOptions>
           <Text size={18}>Selecione a categoria do produto 👇🏼</Text>
 
-          <ButtonFoods onPress={() => setVisible(true)}>
-            <BoxNameIcon>
-              <IconMaterial name='restaurant-menu' />
-              <Foods>Burger</Foods>
-            </BoxNameIcon>
+
+          {categories.length !== 0 && (
+
+          <ButtonFoods onPress={() => setVisibleDrop(true)}>
+              <Foods>{categorySelected?.name}</Foods>
             <IconFeather name="chevron-down" />
           </ButtonFoods>
+          )}
         </WrapperOptions>
 
 
         <WrapperOptions>
           <Text size={18}>Selecione qual é o produto 🍔 </Text>
 
-          <ButtonFoods onPress={() => setVisible(true)}>
+          <ButtonFoods onPress={() => setVisibleMenu(true)}>
             <BoxNameIcon>
               <IconMaterial name='fastfood' />
-              <Foods>X-Tudo</Foods>
+              <Foods>{productSelected.name}</Foods>
             </BoxNameIcon>
             <IconFeather name="chevron-down" />
           </ButtonFoods>
@@ -105,12 +167,13 @@ export function OrderDetails() {
           <Text size={18}>Quantidade : </Text>
           <InputQuantity
             keyboardType='numeric'
-
+            value={amount}
+            onChangeText={setAmount}
           />
         </WrapperQuantity>
 
         <InputMore>
-          <Text size={22}>+</Text>
+          <Text size={22} color={theme.colors.background}>+</Text>
         </InputMore>
       </Main>
 
@@ -118,7 +181,7 @@ export function OrderDetails() {
         <Button 
           title="Finalizar pedido"
           onPress={finishRequest}
-          backgroundColor={theme.colors.primary}
+          backgroundColor={theme.colors.secondary}
           width={200}
           fontSize={17}
           icon={true}
@@ -126,11 +189,32 @@ export function OrderDetails() {
       </Footer>
 
       <Modal
-        visible={false}
+        visible={visibleMenu}
         presentationStyle="pageSheet"
         animationType='fade'
-        onRequestClose={() => setVisible(false)}
+        onRequestClose={() => setVisibleMenu(false)}
       >
+
+        <MenuFoods 
+        product={product}
+        setProductSelected={setProductSelected}
+        setVisibleMenu={() => setVisibleMenu(false)}
+
+        />
+
+      </Modal>
+
+      <Modal
+        visible={visibleDrop}
+        transparent={true}
+        animationType='fade'
+      >
+
+        <DropCategories 
+        categories={categories} 
+        setVisibleDrop={() => setVisibleDrop(false)}
+        setCategorySelected={setCategorySelected}
+        />
 
       </Modal>
 

@@ -12,6 +12,7 @@ export const Header = styled.View`
   padding-top: 10%;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
 
 `;
 
@@ -86,6 +87,7 @@ export const InputQuantity = styled.TextInput`
   background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.white};
   margin-left: 2%;
+  text-align: center;
 
 `;
 
@@ -100,7 +102,7 @@ export const WrapperQuantity = styled.View`
 export const InputMore = styled.TouchableOpacity`
   width: 50px;
   height: 30px;
-  background-color: ${({ theme }) => theme.colors.attention};
+  background-color: ${({ theme }) => theme.colors.primary};
   border-radius: 4px;
   align-items: center;
   justify-content: center;
