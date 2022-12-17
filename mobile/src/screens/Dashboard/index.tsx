@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { StatusBar,Dimensions } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StatusBar,Dimensions, Modal } from 'react-native';
 import { useAuth } from '../../context/AuthContext';
 
 import { Text } from '../../components/Text';
@@ -20,12 +20,14 @@ import {
   ImageMain,
 } from './styles';
 import { useNavigation } from '@react-navigation/native';
+import { OpenOrder } from '../../components/OpenOrder';
 
 const ww = Dimensions.get('window').width
 const wh = Dimensions.get('window').height
 
 export function Dashboard() {
   const { signOut, user } = useAuth();
+  const [visible, setVisible] = useState(false);
   const theme = useTheme();
   const navigation = useNavigation();
 
@@ -107,6 +109,7 @@ export function Dashboard() {
           <Button
             title="Abrir pedido"
             backgroundColor={theme.colors.primary}
+            onPress={() => setVisible(true)}
             width={250}
             height={45}
             fontSize={16}
@@ -115,6 +118,20 @@ export function Dashboard() {
 
       </Animated.View>
 
+
+
+      <Modal
+        visible={visible}
+        transparent={true}
+        animationType='fade'
+
+      >
+      <OpenOrder 
+        setVisible={setVisible}
+
+      />
+
+      </Modal>
 
     </Container>
   );
