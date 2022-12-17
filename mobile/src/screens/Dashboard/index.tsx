@@ -41,16 +41,12 @@ export function Dashboard() {
     container:()=>{
       container.value = {...container.value,x:ww,o:1}
     },
-    // requestButton:(x)=>{
-    //   requestButton.value = {x:x}
-    // }
+
   }
-  const hide={}
 
   const anm = {
     container:useAnimatedStyle(()=>{
       return{
-        // transform:[{translateX:withSpring(container.value.x,{mass:0.45,stiffness:75,damping:20})}],
         opacity:withTiming(container.value.o,{duration:1200})
       }
     })
@@ -73,6 +69,7 @@ export function Dashboard() {
     return unsubscribe;
   },[navigation])
 
+
   return (
     <Container>
 
@@ -83,7 +80,6 @@ export function Dashboard() {
       />
 
       <Animated.View style={[{position:'absolute',width:ww,height:wh,},anm.container]}>
-        {/* //left:-ww */}
 
         <Header>
           <WrapperImage>
@@ -128,6 +124,7 @@ export function Dashboard() {
       >
       <OpenOrder 
         setVisible={setVisible}
+        visible={visible}
 
       />
 

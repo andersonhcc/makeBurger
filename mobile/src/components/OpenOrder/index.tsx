@@ -23,11 +23,12 @@ import {
 
 
 interface IOpenOrder {
+  visible: boolean;
   setVisible: (value: boolean) => void;
 }
 
 
-export function OpenOrder({ setVisible }: IOpenOrder) {
+export function OpenOrder({ setVisible, visible }: IOpenOrder) {
   const theme = useTheme();
   const [numberOrder, setNumberOrder] = useState('');
   const navigation = useNavigation();
@@ -42,6 +43,7 @@ async function handleDetailsOrder(){
     const response = await api.post('/order', {
       table: Number(numberOrder),
     })
+    setVisible(false)
     navigation.navigate(SceneName.OrderDetails, {orderNumber: numberOrder, order_id: response.data.id })
 
   } catch (error) {
@@ -49,9 +51,9 @@ async function handleDetailsOrder(){
       Alert.alert('Abrir mesa', 'Não foi possível abrir a mesa, tente novamente.')
   }
 
-
-  
 }
+
+
 
   return (
     <Container>
