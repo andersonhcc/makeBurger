@@ -46,7 +46,7 @@ export interface IProduct {
   name: string;
   id: string;
   description: string;
-  banner: any;
+  banner: string;
   price: string;
 }
 
@@ -98,6 +98,7 @@ export function OrderDetails() {
 
       setCategories(response.data);
       setCategorySelected(response.data[0]);
+
     }
 
     getCategories()
@@ -113,6 +114,7 @@ export function OrderDetails() {
       })
 
       setProduct(response.data);
+      setProductSelected(response.data[0]);
 
     }
 
@@ -153,6 +155,7 @@ export function OrderDetails() {
         <WrapperOptions>
           <Text size={18}>Selecione qual é o produto 🍔 </Text>
 
+          {product.length !== 0 && (
           <ButtonFoods onPress={() => setVisibleMenu(true)}>
             <BoxNameIcon>
               <IconMaterial name='fastfood' />
@@ -160,6 +163,7 @@ export function OrderDetails() {
             </BoxNameIcon>
             <IconFeather name="chevron-down" />
           </ButtonFoods>
+          )}
         </WrapperOptions>
 
 
