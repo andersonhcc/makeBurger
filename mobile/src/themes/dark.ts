@@ -9,6 +9,11 @@ export default {
     attention: "#FF3F4B",
     secondary: "#3FFFA3",
     color_borda: '#302F3C',
+    text_notifications: '#302F3C',
+    color_borda2: '#e4dfdf',
+    gray_intense: '#767676',
+
+
 
   },
 

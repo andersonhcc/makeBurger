@@ -9,6 +9,8 @@ export default {
     attention: "#FF3F4B",
     secondary: "#3FFFA3",
     color_borda: '#e4dfdf',
+    gray_intense: '#767676',
+    
   },
 
   fonts:{
