@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { Modal } from 'react-native';
+import { Modal, Alert } from 'react-native';
 
 import { Text } from '../../components/Text';
 import { Button } from '../../components/Button';
 
 import { useTheme } from 'styled-components';
 import { useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+
+import { SceneName } from '../../routes/scene-name';
+
+import { api } from '../../service/api';
 
 import {
   Container,
@@ -27,13 +32,34 @@ import {
 
 interface Props {
   orderNumber: string;
+  order_id: string;
 }
 
 export function OrderDetails() {
   const theme = useTheme();
   const { params } = useRoute();
-  const { orderNumber } = params as Props;
+  const navigation = useNavigation();
+  const { orderNumber, order_id } = params as Props;
   const [visible, setVisible] = useState(false);
+
+
+  async function handleDeleteOrder() {
+    try {
+    const response = await api.delete('/order', {
+      params: {
+        order_id: order_id,
+      }
+    })
+      navigation.goBack();
+    } catch (error) {
+        console.log(error);
+        Alert.alert("Não foi possível fechar a mesa.")
+    }
+  }
+
+  function finishRequest(){
+    navigation.navigate(SceneName.FinishOrder);
+  }
 
   return (
     <Container>
@@ -41,7 +67,7 @@ export function OrderDetails() {
 
         <Text size={22}>Aberta a mesa {orderNumber}</Text>
 
-        <ButtonCancel>
+        <ButtonCancel onPress={handleDeleteOrder}>
           <IconDelete name="trash" />
         </ButtonCancel>
 
@@ -91,6 +117,7 @@ export function OrderDetails() {
       <Footer>
         <Button 
           title="Finalizar pedido"
+          onPress={finishRequest}
           backgroundColor={theme.colors.primary}
           width={200}
           fontSize={17}

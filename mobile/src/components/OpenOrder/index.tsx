@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Pressable } from 'react-native';
+import { Pressable, Alert } from 'react-native';
 
 import { useTheme } from 'styled-components';
 import { useNavigation } from '@react-navigation/native';
 
 import { SceneName } from '../../routes/scene-name';
+
+import { api } from '../../service/api';
 
 import { Text } from '../Text'
 import { Button } from '../Button';
@@ -31,12 +33,24 @@ export function OpenOrder({ setVisible }: IOpenOrder) {
   const navigation = useNavigation();
 
 
-function handleDetailsOrder(){
+async function handleDetailsOrder(){
   if(numberOrder === ''){
     return;
   }
+
+  try {
+    const response = await api.post('/order', {
+      table: Number(numberOrder),
+    })
+    navigation.navigate(SceneName.OrderDetails, {orderNumber: numberOrder, order_id: response.data.id })
+
+  } catch (error) {
+      console.log(error);
+      Alert.alert('Abrir mesa', 'Não foi possível abrir a mesa, tente novamente.')
+  }
+
+
   
-  navigation.navigate(SceneName.OrderDetails, {orderNumber: numberOrder })
 }
 
   return (

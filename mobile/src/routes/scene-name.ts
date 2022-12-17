@@ -3,5 +3,6 @@ export enum SceneName {
   Dashboard = "Dashboard",
   StartApp = "StartApp",
   OrderDetails = "OrderDetails",
+  FinishOrder = "FinishOrder",
 
 }
