@@ -24,7 +24,7 @@ export const Main = styled.View`
   padding-left: 5%;
   
   justify-items: center;
-  
+
 `;
 
 export const WrapperOptions = styled.View`
@@ -99,7 +99,7 @@ export const WrapperQuantity = styled.View`
 
 `;
 
-export const InputMore = styled.TouchableOpacity`
+export const ButtonAdd = styled.TouchableOpacity`
   width: 50px;
   height: 30px;
   background-color: ${({ theme }) => theme.colors.primary};

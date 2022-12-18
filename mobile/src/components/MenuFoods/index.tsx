@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 
-import { ICategory } from '../../screens/OrderDetails';
+import { IProductSelected } from '../../screens/OrderDetails';
 
 import { Text } from '../Text';
 import { api } from '../../service/api'
@@ -23,7 +23,7 @@ import {
 
 interface Props {
   product: IProduct[];
-  setProductSelected: (value: ICategory) => void;
+  setProductSelected: (value: IProductSelected) => void;
   setVisibleMenu: () => void;
 }
 
@@ -39,13 +39,18 @@ export function MenuFoods({
 
   const theme = useTheme();
   
-  function handleProduct(item: ICategory){
+  function handleProduct(item: IProductSelected){
     setProductSelected({
       name: item.name,
       id: item.id,
+      description: item.description,
+      price: item.price,
     })
     setVisibleMenu();
   }
+
+
+
 
   // async function downloadImage(){
   //   const images = {}; 
@@ -69,11 +74,7 @@ export function MenuFoods({
   
   // }
 
-  // useEffect(() => {
-  //   downloadImage();
-  // },[ ])
 
-  console.log(imagesFoods);
 
   return (  
     <Container>
@@ -88,7 +89,6 @@ export function MenuFoods({
          renderItem={({ item }) => (
           
           <ButtonSelect onPress={() => handleProduct(item)}>
-            {/* <ImageFood source={{ uri: teste(item.banner)}}/> */}
             <ImageLoading></ImageLoading>
             
             <WrapperInfo>

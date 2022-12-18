@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Alert } from 'react-native';
+import { Modal, Alert, FlatList } from 'react-native';
 
 import { Text } from '../../components/Text';
 import { Button } from '../../components/Button';
 import { DropCategories } from '../../components/DropCategories';
 import { MenuFoods } from '../../components/MenuFoods';
+import { RequestFood } from '../../components/RequestFood';
 
 import { useTheme } from 'styled-components';
 import { useRoute } from '@react-navigation/native';
@@ -28,7 +29,7 @@ import {
   WrapperOptions,
   WrapperQuantity,
   InputQuantity,
-  InputMore,
+  ButtonAdd,
   Footer,
 } from './styles';
 
@@ -50,6 +51,22 @@ export interface IProduct {
   price: string;
 }
 
+export interface IProductSelected {
+  name: string;
+  id: string;
+  description: string;
+  price: string;
+}
+
+
+export interface IRequest {
+  id: string;
+  product_id: string;
+  name: string;
+  amount: string | number;
+  description: string;
+}
+
 export function OrderDetails() {
   const theme = useTheme();
   const { params } = useRoute();
@@ -64,7 +81,9 @@ export function OrderDetails() {
   const [categorySelected, setCategorySelected] = useState({} as ICategory);
 
   const [product, setProduct] = useState<IProduct[] | []>([]);
-  const [productSelected, setProductSelected] = useState({} as ICategory);
+  const [productSelected, setProductSelected] = useState({} as IProductSelected);
+
+  const [requests, setRequests] = useState<IRequest[]>([]);
 
 
 
@@ -88,6 +107,28 @@ export function OrderDetails() {
 
   function finishRequest(){
     navigation.navigate(SceneName.FinishOrder);
+  }
+
+  async function handleAdd(){
+    
+    const response = await api.post('/order/add', {
+      order_id: order_id,
+      product_id: productSelected?.id as string,
+      amount: Number(amount)
+    })
+
+    let data  = {
+      id: response.data.id,
+      product_id: productSelected?.id as string,
+      name: productSelected?.name as string,
+      amount: amount,
+      description: productSelected?.description as string
+
+    }
+    
+    setRequests(oldArray => [...oldArray, data]);
+
+
   }
 
 
@@ -176,14 +217,32 @@ export function OrderDetails() {
           />
         </WrapperQuantity>
 
-        <InputMore>
+        <ButtonAdd
+          onPress={handleAdd}
+        >
           <Text size={22} color={theme.colors.background}>+</Text>
-        </InputMore>
+        </ButtonAdd>
+
+        <FlatList 
+          data={requests}
+          style={{flex: 1, marginTop: 24}}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={item => item.id}
+          renderItem = {({ item }) => (
+            <RequestFood 
+              data={item}
+            />
+          )}
+
+        />
+
+
+
       </Main>
 
       <Footer>
         <Button 
-          title="Finalizar pedido"
+          title="Finalizar mesa"
           onPress={finishRequest}
           backgroundColor={theme.colors.secondary}
           width={200}

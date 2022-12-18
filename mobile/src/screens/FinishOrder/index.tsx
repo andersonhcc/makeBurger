@@ -30,8 +30,8 @@ export function FinishOrder() {
           <Done />
         </WrapperIcon>
 
-        <Text size={30} fontFamily={theme.fonts.medium}>Pedido finalizado</Text>
-        <Text size={15} color={theme.colors.gray}>Agora é só aguardar a cozinha {'\n'} fazer a mágica!</Text>
+        <Text size={30} fontFamily={theme.fonts.medium}>Mesa finalizada</Text>
+        <Text size={15} color={theme.colors.gray}>Agora é só encaminhar para o pagamento do valor de 200R$</Text>
 
         <WrapperButton>
         <Button
