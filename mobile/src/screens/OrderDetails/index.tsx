@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Alert, FlatList } from 'react-native';
 
+
+
+
 import { Text } from '../../components/Text';
 import { Button } from '../../components/Button';
 import { DropCategories } from '../../components/DropCategories';
@@ -48,14 +51,14 @@ export interface IProduct {
   id: string;
   description: string;
   banner: string;
-  price: string;
+  price: string | number;
 }
 
 export interface IProductSelected {
   name: string;
   id: string;
   description: string;
-  price: string;
+  price: string | number;
 }
 
 
@@ -63,6 +66,7 @@ export interface IRequest {
   id: string;
   product_id: string;
   name: string;
+  price: string | number;
   amount: string | number;
   description: string;
 }
@@ -72,7 +76,7 @@ export function OrderDetails() {
   const { params } = useRoute();
   const navigation = useNavigation();
   const { orderNumber, order_id } = params as Props;
-  
+
   const [visibleMenu, setVisibleMenu] = useState(false);
   const [visibleDrop, setVisibleDrop] = useState(false);
 
@@ -92,49 +96,102 @@ export function OrderDetails() {
 
   async function handleDeleteOrder() {
     try {
-    const response = await api.delete('/order', {
-      params: {
-        order_id: order_id,
-      }
-    })
+      const response = await api.delete('/order', {
+        params: {
+          order_id: order_id,
+        }
+      })
       navigation.goBack();
     } catch (error) {
-        console.log(error);
-        Alert.alert("Não foi possível fechar a mesa.")
+      console.log(error);
+      Alert.alert("Não foi possível fechar a mesa.")
     }
   }
 
 
-  function finishRequest(){
+  function finishRequest() {
     navigation.navigate(SceneName.FinishOrder);
   }
 
-  async function handleAdd(){
-    
+  async function handleAdd() {
+
     const response = await api.post('/order/add', {
       order_id: order_id,
       product_id: productSelected?.id as string,
       amount: Number(amount)
     })
 
-    let data  = {
+    let data = {
       id: response.data.id,
       product_id: productSelected?.id as string,
       name: productSelected?.name as string,
       amount: amount,
-      description: productSelected?.description as string
+      description: productSelected?.description as string,
+      price: productSelected?.price as string,
 
     }
-    
-    setRequests(oldArray => [...oldArray, data]);
+
+    setRequests((oldArray) => {
+      const newProduct = [...oldArray];
+      const itemIndex = oldArray.findIndex(item => item.product_id === productSelected.id);
+
+      if (itemIndex < 0) {
+        console.log(productSelected.id)
+        return [...newProduct, data]
+      }
+      const item = newProduct[itemIndex]
+
+      // const total = requests.reduce((acc, item) => {
+      //   const newPrice = acc + Number(item.price) * Number(item.amount)
+      //   return {
+      //     ...item,
+      //     price: newPrice
+      //   }
+      // });
+
+
+      newProduct[itemIndex] = {
+        name: item.name,
+        description: item.description,
+        id: item.id,
+        product_id: item.product_id,
+        amount: Number(item.amount) + Number(amount),
+        price: item.price,
+      }
+
+      return newProduct;
+
+    });
 
 
   }
 
+  async function handleDeleteProduct(item_id: string){
+    
+    try {
+      const response = await api.delete('/order/remove', {
+        params: {
+          item_id: item_id,
+        }
+      })
+     
+      let removeItem = requests.filter(item => {
+        return (item.id !== item_id);
+     
+      })
+
+      setRequests(removeItem);
+    
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Não foi possível realizar essa ação.')
+    }
+  }
+
 
   useEffect(() => {
-    async function getCategories(){
-      
+    async function getCategories() {
+
       const response = await api.get('/category');
 
       setCategories(response.data);
@@ -144,10 +201,10 @@ export function OrderDetails() {
 
     getCategories()
 
-  },[])
+  }, [])
 
-  useEffect(() => { 
-    async function getProductsSelected(){ 
+  useEffect(() => {
+    async function getProductsSelected() {
       const response = await api.get('category/product', {
         params: {
           category_id: categorySelected.id,
@@ -171,9 +228,11 @@ export function OrderDetails() {
 
         <Text size={22}>Aberta a mesa {orderNumber}</Text>
 
-        <ButtonCancel onPress={handleDeleteOrder}>
-          <IconDelete name="trash" />
-        </ButtonCancel>
+        {requests.length === 0 &&
+          <ButtonCancel onPress={handleDeleteOrder}>
+            <IconDelete name="trash" />
+          </ButtonCancel>
+        }
 
       </Header>
 
@@ -185,10 +244,10 @@ export function OrderDetails() {
 
           {categories.length !== 0 && (
 
-          <ButtonFoods onPress={() => setVisibleDrop(true)}>
+            <ButtonFoods onPress={() => setVisibleDrop(true)}>
               <Foods>{categorySelected?.name}</Foods>
-            <IconFeather name="chevron-down" />
-          </ButtonFoods>
+              <IconFeather name="chevron-down" />
+            </ButtonFoods>
           )}
         </WrapperOptions>
 
@@ -197,13 +256,13 @@ export function OrderDetails() {
           <Text size={18}>Selecione qual é o produto 🍔 </Text>
 
           {product.length !== 0 && (
-          <ButtonFoods onPress={() => setVisibleMenu(true)}>
-            <BoxNameIcon>
-              <IconMaterial name='fastfood' />
-              <Foods>{productSelected.name}</Foods>
-            </BoxNameIcon>
-            <IconFeather name="chevron-down" />
-          </ButtonFoods>
+            <ButtonFoods onPress={() => setVisibleMenu(true)}>
+              <BoxNameIcon>
+                <IconMaterial name='fastfood' />
+                <Foods>{productSelected.name}</Foods>
+              </BoxNameIcon>
+              <IconFeather name="chevron-down" />
+            </ButtonFoods>
           )}
         </WrapperOptions>
 
@@ -222,26 +281,30 @@ export function OrderDetails() {
         >
           <Text size={22} color={theme.colors.background}>+</Text>
         </ButtonAdd>
+       
+       
+            <FlatList
+              data={requests}
+              style={{ flex: 1, marginTop: 24 }}
+              showsVerticalScrollIndicator={false}
+              keyExtractor={item => item.id}
+              renderItem={({ item }) => (
+                <RequestFood
+                  data={item}
+                  handleDeleteProduct={handleDeleteProduct}
+                />
+              )}
 
-        <FlatList 
-          data={requests}
-          style={{flex: 1, marginTop: 24}}
-          showsVerticalScrollIndicator={false}
-          keyExtractor={item => item.id}
-          renderItem = {({ item }) => (
-            <RequestFood 
-              data={item}
             />
-          )}
 
-        />
+
 
 
 
       </Main>
 
       <Footer>
-        <Button 
+        <Button
           title="Finalizar mesa"
           onPress={finishRequest}
           backgroundColor={theme.colors.secondary}
@@ -258,10 +321,10 @@ export function OrderDetails() {
         onRequestClose={() => setVisibleMenu(false)}
       >
 
-        <MenuFoods 
-        product={product}
-        setProductSelected={setProductSelected}
-        setVisibleMenu={() => setVisibleMenu(false)}
+        <MenuFoods
+          product={product}
+          setProductSelected={setProductSelected}
+          setVisibleMenu={() => setVisibleMenu(false)}
 
         />
 
@@ -273,10 +336,10 @@ export function OrderDetails() {
         animationType='fade'
       >
 
-        <DropCategories 
-        categories={categories} 
-        setVisibleDrop={() => setVisibleDrop(false)}
-        setCategorySelected={setCategorySelected}
+        <DropCategories
+          categories={categories}
+          setVisibleDrop={() => setVisibleDrop(false)}
+          setCategorySelected={setCategorySelected}
         />
 
       </Modal>

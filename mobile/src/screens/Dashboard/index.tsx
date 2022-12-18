@@ -86,7 +86,7 @@ export function Dashboard() {
             <ImageProfile source={{ uri: `https://ui-avatars.com/api/?background=FFC859&name=${user.name}&color=101026` }} />
           </WrapperImage>
 
-          <Text size={20}>Restaurante {user.name}</Text>
+          <Text size={20}>Restaurante <Text size={20} color={theme.colors.primary} fontFamily={theme.fonts.bold}>{user.name}</Text></Text>
 
           <WrapperIcon onPress={signOut}>
             <IconExit />

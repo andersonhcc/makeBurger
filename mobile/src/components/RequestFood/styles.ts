@@ -24,3 +24,5 @@ export const WrapperTitle = styled.View`
 export const WrapperAmount = styled.View`
   padding-right: 5%;
 `;
+
+export const ButtonDelete = styled.TouchableOpacity``;
