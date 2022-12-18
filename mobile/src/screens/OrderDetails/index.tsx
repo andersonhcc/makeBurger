@@ -109,8 +109,12 @@ export function OrderDetails() {
   }
 
 
-  function finishRequest() {
-    navigation.navigate(SceneName.FinishOrder);
+  async function finishRequest() {
+   
+    navigation.navigate(SceneName.FinishOrder, { 
+      orderNumber: orderNumber,
+      order_id: order_id,
+    });
   }
 
   async function handleAdd() {
@@ -305,12 +309,14 @@ export function OrderDetails() {
 
       <Footer>
         <Button
-          title="Finalizar mesa"
+          title="Próximo"
+          colorFont={theme.colors.background}
           onPress={finishRequest}
           backgroundColor={theme.colors.secondary}
           width={200}
           fontSize={17}
-          icon={true}
+          style={requests.length === 0 ? {opacity: 0.5} : {opacity:1}}
+          disabled={requests.length === 0}
         />
       </Footer>
 

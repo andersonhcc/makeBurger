@@ -38,7 +38,6 @@ export const Indicator = styled.ActivityIndicator.attrs({
 `;
 
 export const Icon = styled(Feather)`
-  color: ${({ theme }) => theme.colors.white};
   font-size: ${RFValue(20)}px;
   margin-left: 5px;
 

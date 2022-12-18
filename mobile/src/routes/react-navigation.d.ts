@@ -10,7 +10,10 @@ export type RootStackParamList = {
   [SceneName.Dashboard] : undefined;
   [SceneName.StartApp] : undefined;
   [SceneName.OrderDetails] : IOrder;
-  [SceneName.FinishOrder] : undefined;
+  [SceneName.FinishOrder] : {
+    order_id: string;
+    orderNumber: string;
+  };
 
 
 

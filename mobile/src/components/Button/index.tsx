@@ -22,6 +22,8 @@ interface PropsButton extends TouchableOpacityProps {
   height?: number;
   fontSize?: number;
   icon?: boolean;
+  colorFont?: string;
+  fontTitle?: string;
 }
 
 export function Button({
@@ -34,6 +36,8 @@ export function Button({
   height,
   fontSize,
   icon,
+  colorFont,
+  fontTitle,
   ...props }
   : PropsButton) {
 
@@ -56,14 +60,18 @@ export function Button({
 
           <WrapperElements>
             <Text
-              color={theme.colors.white}
+              color={colorFont ? colorFont : theme.colors.white}
               size={fontSize ? fontSize : 20}
+              fontFamily={ fontTitle ? fontTitle : theme.fonts.regular}
             >
               {title}
             </Text>
 
             {icon &&
-            <Icon name="shopping-cart" />
+            <Icon 
+            name="shopping-cart" 
+            color={colorFont ? colorFont : theme.colors.white}
+            />
             }
           </WrapperElements>
 
