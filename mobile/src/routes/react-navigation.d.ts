@@ -1,5 +1,7 @@
 import type { SceneName } from './scene-name'
 
+import { IRequest } from '../screens/OrderDetails';
+
 interface IOrder {
   orderNumber: string;
   order_id: string;
@@ -13,6 +15,7 @@ export type RootStackParamList = {
   [SceneName.FinishOrder] : {
     order_id: string;
     orderNumber: string;
+    requests: IRequest[];
   };
 
 

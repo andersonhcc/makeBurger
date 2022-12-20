@@ -69,6 +69,7 @@ export interface IRequest {
   price: string | number;
   amount: string | number;
   description: string;
+  acc: number;
 }
 
 export function OrderDetails() {
@@ -90,7 +91,6 @@ export function OrderDetails() {
   const [requests, setRequests] = useState<IRequest[]>([]);
 
 
-
   const [amount, setAmount] = useState('1');
 
 
@@ -101,6 +101,7 @@ export function OrderDetails() {
           order_id: order_id,
         }
       })
+
       navigation.goBack();
     } catch (error) {
       console.log(error);
@@ -110,10 +111,11 @@ export function OrderDetails() {
 
 
   async function finishRequest() {
-   
-    navigation.navigate(SceneName.FinishOrder, { 
+
+    navigation.navigate(SceneName.FinishOrder, {
       orderNumber: orderNumber,
       order_id: order_id,
+      requests,
     });
   }
 
@@ -139,53 +141,52 @@ export function OrderDetails() {
       const newProduct = [...oldArray];
       const itemIndex = oldArray.findIndex(item => item.product_id === productSelected.id);
 
-      if (itemIndex < 0) {
-        console.log(productSelected.id)
-        return [...newProduct, data]
+      if (itemIndex < 0) {        
+        return [...newProduct, {
+          ...data,
+          acc: Number(data.price) * Number(data.amount)
+        }]
+      
+      
       }
       const item = newProduct[itemIndex]
 
-      // const total = requests.reduce((acc, item) => {
-      //   const newPrice = acc + Number(item.price) * Number(item.amount)
-      //   return {
-      //     ...item,
-      //     price: newPrice
-      //   }
-      // });
-
-
       newProduct[itemIndex] = {
-        name: item.name,
-        description: item.description,
-        id: item.id,
-        product_id: item.product_id,
-        amount: Number(item.amount) + Number(amount),
-        price: item.price,
-      }
+          name: item.name,
+          description: item.description,
+          id: item.id,
+          product_id: item.product_id,
+          amount: Number(item.amount) + Number(amount),
+          price: Number(item.price),
+          acc: Number(item.price) * (Number(item.amount) + Number(amount)),
+        }
+
 
       return newProduct;
 
     });
 
 
+
+
   }
 
-  async function handleDeleteProduct(item_id: string){
-    
+  async function handleDeleteProduct(item_id: string) {
+
     try {
       const response = await api.delete('/order/remove', {
         params: {
           item_id: item_id,
         }
       })
-     
+
       let removeItem = requests.filter(item => {
         return (item.id !== item_id);
-     
+
       })
 
       setRequests(removeItem);
-    
+
     } catch (error) {
       console.log(error);
       Alert.alert('Não foi possível realizar essa ação.')
@@ -240,7 +241,6 @@ export function OrderDetails() {
 
       </Header>
 
-
       <Main>
         <WrapperOptions>
           <Text size={18}>Selecione a categoria do produto 👇🏼</Text>
@@ -285,25 +285,21 @@ export function OrderDetails() {
         >
           <Text size={22} color={theme.colors.background}>+</Text>
         </ButtonAdd>
-       
-       
-            <FlatList
-              data={requests}
-              style={{ flex: 1, marginTop: 24 }}
-              showsVerticalScrollIndicator={false}
-              keyExtractor={item => item.id}
-              renderItem={({ item }) => (
-                <RequestFood
-                  data={item}
-                  handleDeleteProduct={handleDeleteProduct}
-                />
-              )}
 
+
+        <FlatList
+          data={requests}
+          style={{ flex: 1, marginTop: 24 }}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => (
+            <RequestFood
+              data={item}
+              handleDeleteProduct={handleDeleteProduct}
             />
+          )}
 
-
-
-
+        />
 
       </Main>
 
@@ -315,7 +311,7 @@ export function OrderDetails() {
           backgroundColor={theme.colors.secondary}
           width={200}
           fontSize={17}
-          style={requests.length === 0 ? {opacity: 0.5} : {opacity:1}}
+          style={requests.length === 0 ? { opacity: 0.5 } : { opacity: 1 }}
           disabled={requests.length === 0}
         />
       </Footer>

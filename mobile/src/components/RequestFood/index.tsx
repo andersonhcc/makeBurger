@@ -39,7 +39,7 @@ export function RequestFood({ data, handleDeleteProduct }: Props) {
 
       <WrapperAmount>
         <Text size={20}>{data.amount}x</Text>
-        <Text size={17} color={theme.colors.attention}>R$ {data.price}</Text>
+        <Text size={17} color={theme.colors.attention}>R$ {data.acc}</Text>
       </WrapperAmount>
       <Main>
         <WrapperTitle>
