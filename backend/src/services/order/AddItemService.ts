@@ -11,7 +11,7 @@ class AddItemService {
   async execute({ 
     order_id, 
     amount, 
-    product_id
+    product_id,
   } : ItemRequest){
 
     const order = await prismaClient.item.create({
