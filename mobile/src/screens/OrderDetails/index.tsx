@@ -96,6 +96,13 @@ export function OrderDetails() {
 
   async function handleDeleteOrder() {
     try {
+      
+      const deleteItems = await api.delete('/order/item', {
+        params: {
+          order_id,
+        }
+      })
+      
       const response = await api.delete('/order', {
         params: {
           order_id: order_id,

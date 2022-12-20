@@ -72,9 +72,8 @@ export function FinishOrder() {
           <Done />
         </WrapperIcon>
         <Text size={30} fontFamily={theme.fonts.bold} color={theme.colors.primary}>Mesa {orderNumber}</Text>
-        <Text size={30} fontFamily={theme.fonts.medium}>Finalizar pedido</Text>
-        <Text size={15} color={theme.colors.gray}>O valor total foi: {sumProducts()?.accs||''}
-        
+        <Text size={30} fontFamily={theme.fonts.medium}>Finalizar Mesa</Text>
+        <Text size={15} color={theme.colors.attention}>O valor total foi: {sumProducts()?.accs||''} R$
         </Text>
         <Text size={15} color={theme.colors.gray}>E a quantidade de produtos: {sumProducts()?.amounts||''} </Text>
 
@@ -83,7 +82,7 @@ export function FinishOrder() {
         backgroundColor={theme.colors.secondary}
         colorFont={theme.colors.background}
         onPress={handleFinishRequest}
-        title="Finalizar pedido"
+        title="Finalizar mesa"
         icon={true}
         width={150}
         height={40}
