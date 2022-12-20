@@ -20,7 +20,7 @@ export const InputOrder = styled.TextInput`
   color: ${({ theme }) => theme.colors.gray};
   border-style: dashed;
   border-width: 1px;
-  padding: 10px 15px;
+  padding: 15px 20px;
 
   font-family: ${({ theme }) => theme.fonts.regular};
   font-size: ${RFValue(12)}px;

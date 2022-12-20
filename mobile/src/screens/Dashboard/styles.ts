@@ -9,7 +9,7 @@ export const Container = styled.View`
 
 export const Header = styled.View`
   width: 100%;
-  height: 100px;
+  height: 90px;
   flex-direction: row;
   justify-content: space-around;
   align-items: flex-end;

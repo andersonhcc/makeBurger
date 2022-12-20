@@ -1,9 +1,11 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useEffect } from 'react';
 import { useColorScheme, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { Routes } from './src/routes';
 import { ThemeProvider } from "styled-components";
 import * as SplashScreen from "expo-splash-screen";
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { LightTheme, DarkTheme } from './src/themes';
 
@@ -26,13 +28,23 @@ import {
 
 export default function App() {
   const deviceColor = useColorScheme();
-
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_400Regular_Italic,
     Poppins_600SemiBold,
     Poppins_700Bold
   });
+
+  async function showAnimation(){
+    const data = false;
+    const first = await AsyncStorage.setItem('@makeburger/first', JSON.stringify(data))
+  }
+
+
+  useEffect(() => {
+    showAnimation();
+  },[])
+
 
 
   const themes = useMemo(() => {

@@ -74,7 +74,7 @@ export function SignIn() {
       />
 
 
-      <Footer>
+      {/* <Footer>
         
         <Text size={15}>
          Não possui uma conta?
@@ -83,7 +83,7 @@ export function SignIn() {
           <Text size={15}>Crie uma</Text> 
         </ButtonSignUp>
 
-      </Footer>
+      </Footer> */}
 
 
 

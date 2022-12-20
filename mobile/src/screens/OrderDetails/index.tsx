@@ -281,7 +281,7 @@ export function OrderDetails() {
         <WrapperQuantity>
           <Text size={18}>Quantidade : </Text>
           <InputQuantity
-            keyboardType='numeric'
+            keyboardType='numbers-and-punctuation'
             value={amount}
             onChangeText={setAmount}
           />
