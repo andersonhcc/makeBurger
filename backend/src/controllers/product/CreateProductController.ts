@@ -18,7 +18,7 @@ class CreateProductController {
         name,
         price,
         description,
-        banner,
+        banner: 'http://192.168.1.19:3333/files/' + banner,
         category_id,
       });
 
