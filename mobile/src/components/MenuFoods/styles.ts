@@ -34,8 +34,8 @@ export const SeparatorComponent = styled.View`
 `;
 
 export const ImageFood = styled.Image`
-  width: 90px;
-  height: 1000px;
+  width: 150px;
+  height: 100%;
 `;
 
 export const ImageLoading = styled.View`

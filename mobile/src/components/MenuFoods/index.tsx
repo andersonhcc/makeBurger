@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FlatList } from 'react-native';
 
 import { IProductSelected } from '../../screens/OrderDetails';
 
 import { Text } from '../Text';
-import { api } from '../../service/api'
 
 import { useTheme } from 'styled-components';
 
@@ -17,8 +16,8 @@ import {
   Main,
   ButtonSelect,
   SeparatorComponent,
-  ImageLoading,
   WrapperInfo,
+  ImageFood,
 } from './styles';
 
 interface Props {
@@ -33,10 +32,6 @@ export function MenuFoods({
   setVisibleMenu
 } : Props) {
 
-  const [imagesFoods, setImagesFoods] = useState({
-
-  });
-
   const theme = useTheme();
   
   function handleProduct(item: IProductSelected){
@@ -48,32 +43,6 @@ export function MenuFoods({
     })
     setVisibleMenu();
   }
-
-
-
-
-  // async function downloadImage(){
-  //   const images = {}; 
-  //   Promise.all(product.map(async (item) => {
-      
-  //     const response = await api.get(`/files/${item.banner}`);
-      
-  //     return images[item.banner] = response.request.responseURL;
-      
-  //   }))
-
-  //   setImagesFoods(images);
-    
-  // }
-
-  // async function teste(item){
-   
-  //   const response = await api.get(`/files/${item.banner}`);
-
-  //   return (response.request.responseURL);
-  
-  // }
-
 
 
   return (  
@@ -89,7 +58,7 @@ export function MenuFoods({
          renderItem={({ item }) => (
           
           <ButtonSelect onPress={() => handleProduct(item)}>
-            <ImageLoading></ImageLoading>
+           <ImageFood source={{ uri: `${item.banner}`}}/>
             
             <WrapperInfo>
             <Text size={20} color={theme.colors.primary}>{item.name}</Text>

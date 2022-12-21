@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Alert, FlatList } from 'react-native';
 
-
-
-
 import { Text } from '../../components/Text';
 import { Button } from '../../components/Button';
 import { DropCategories } from '../../components/DropCategories';
