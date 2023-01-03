@@ -30,3 +30,4 @@ class CreateProductController {
 }
 
 export { CreateProductController };
+
