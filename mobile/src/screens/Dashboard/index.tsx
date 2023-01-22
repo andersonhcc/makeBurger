@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar,Dimensions, Modal } from 'react-native';
+import { StatusBar, Dimensions, Modal } from 'react-native';
 import { useAuth } from '../../context/AuthContext';
 
 import { Text } from '../../components/Text';
@@ -32,42 +32,42 @@ export function Dashboard() {
   const navigation = useNavigation();
 
 
-  const container = useSharedValue({x:0,o:0})
+  const container = useSharedValue({ x: 0, o: 0 })
 
-  const requestButton = useSharedValue({x:0})
+  const requestButton = useSharedValue({ x: 0 })
 
 
-  const show={
-    container:()=>{
-      container.value = {...container.value,x:ww,o:1}
+  const show = {
+    container: () => {
+      container.value = { ...container.value, x: ww, o: 1 }
     },
 
   }
 
   const anm = {
-    container:useAnimatedStyle(()=>{
-      return{
-        opacity:withTiming(container.value.o,{duration:1200})
+    container: useAnimatedStyle(() => {
+      return {
+        opacity: withTiming(container.value.o, { duration: 1200 })
       }
     })
   }
 
 
   const read = {
-    init:()=>{
-      console.log("\x1b[32m",'Dashboard.js')
+    init: () => {
+      console.log("\x1b[32m", 'Dashboard.js')
       setTimeout(() => {
         show.container()
-      },400);
+      }, 400);
     }
   }
 
-  useEffect(()=>{
-    const unsubscribe = navigation.addListener('focus',()=>{
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
       read.init()
     })
     return unsubscribe;
-  },[navigation])
+  }, [navigation])
 
 
   return (
@@ -94,9 +94,7 @@ export function Dashboard() {
         </Header>
 
         <Main>
-          <Text
-          size={20}
-          >
+          <Text size={20}>
             Que tal abrir um novo pedido?
           </Text>
           
@@ -130,6 +128,6 @@ export function Dashboard() {
 
       </Modal>
 
-    </Container>
+    </Container >
   );
 }
