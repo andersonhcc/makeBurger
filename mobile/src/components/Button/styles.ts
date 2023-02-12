@@ -2,7 +2,6 @@ import styled, { css } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Feather } from '@expo/vector-icons';
 
-
 interface Props {
   marginTop?: number;
   backgroundColor?: string;
@@ -23,7 +22,6 @@ export const Container = styled.TouchableOpacity<Props>`
   border-radius: 7px;
   align-items: center;
   justify-content: center;
-
 `;
 
 export const WrapperElements = styled.View`
