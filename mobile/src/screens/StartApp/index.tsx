@@ -1,57 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Container, Header, ImageSlider, Main, Logo, LogoView } from './styles';
 import { Text } from '../../components/Text';
 import { useTheme } from 'styled-components';
-
+import { copySlides } from '../../utils/copySlides';
 
 import { useNavigation } from '@react-navigation/native';
 import { SceneName } from '../../routes/scene-name';
 
 import AppIntroSlider from 'react-native-app-intro-slider';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const slides = [
-  {
-    key: '1',
-    title: 'Cadastre seus pedidos.',
-    description: 'De forma rápida e simples!',
-    image: require('../../assets/images/one.png'),
-  },
-  {
-    key: '2',
-    title: 'Pedido chega na cozinha.',
-    description: 'Será preparado de forma saborosa!',
-    image: require('../../assets/images/two.png'),
-  },
-
-  {
-    key: '3',
-    title: 'Chega ao cliente.',
-    description: 'Satisfação total com um hamburgão!',
-    image: require('../../assets/images/three.png'),
-  },
-]
 
 export function StartApp() {
-  const [showHome, setShowHome] = useState(true);
+  const [showHome] = useState(true);
   const navigation = useNavigation();
   const theme = useTheme();
-
-
-  // useEffect(() => {
-  //   async function getPermission() {
-  //     const data = await AsyncStorage.getItem('@makeburger/first');
-  //     const dataFormatted = JSON.parse(data);
-  //     if (dataFormatted === false) {
-  //       return setShowHome(true);
-  //     } else {
-  //       return navigation.navigate(SceneName.SignIn)
-  //     }
-
-  //   }
-
-  //   getPermission();
-  // }, [])
 
   function handleItems({ item }) {
     return (
@@ -65,20 +27,17 @@ export function StartApp() {
             </LogoView>
             <Header>
 
-
               <ImageSlider
                 source={item.image}
                 style={{
                   resizeMode: 'cover',
                 }}
-
               />
 
             </Header>
 
             <Main>
               <Text size={24} fontFamily={theme.fonts.bold}>{item.title}</Text>
-
               <Text size={18} color={theme.colors.gray}>{item.description}</Text>
             </Main>
 
@@ -93,7 +52,7 @@ export function StartApp() {
         {showHome &&
       <AppIntroSlider
         renderItem={handleItems}
-        data={slides}
+        data={copySlides}
         indicatorStyle={'white'}
         dotStyle={{
           backgroundColor: '#1D1D2E',
@@ -113,7 +72,6 @@ export function StartApp() {
 
       />
 }
-
     </>
 
 

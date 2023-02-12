@@ -6,7 +6,7 @@ import { useRoute } from '@react-navigation/native';
 
 import { SceneName } from '../../routes/scene-name';
 
-import { IRequest } from '../OrderDetails';
+import { Props } from './types';
 
 import { Button } from '../../components/Button';
 import { Text } from '../../components/Text';
@@ -22,12 +22,6 @@ import {
 import { Alert } from 'react-native';
 import { api } from '../../service/api';
 
-interface Props {
-  orderNumber: string;
-  order_id: string;
-  requests: IRequest[];
-}
-
 
 export function FinishOrder() {
   
@@ -38,22 +32,18 @@ export function FinishOrder() {
 
   async function handleFinishRequest(){
     try {
-    const response = await api.put('/order/send', {
+    await api.put('/order/send', {
       order_id: order_id,
     })      
     navigation.navigate(SceneName.Dashboard)
 
     } catch (error) {
-      
       console.log(error);
       Alert.alert('Não foi possível finalizar pedido');
     }
-    
   }
 
   function sumProducts(){
-    console.log(requests);
-    
     let {accs,amounts} = {accs:0,amounts:0}
     requests.map(it=>{
       if(it.acc) accs+=it.acc;
@@ -62,8 +52,6 @@ export function FinishOrder() {
     return {accs,amounts}
   }
 
-  
-  
   return (
     <Container>
 
@@ -91,10 +79,7 @@ export function FinishOrder() {
         />
       </WrapperButton>
 
-
       </Main>
-
-  
 
     </Container>
   );

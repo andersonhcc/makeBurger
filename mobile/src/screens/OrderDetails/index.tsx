@@ -13,6 +13,9 @@ import { useNavigation } from '@react-navigation/native';
 
 import { SceneName } from '../../routes/scene-name';
 
+import { ICategory, IProduct, IProductSelected, Props } from './types';
+import { IRequest } from '../../dtos/IRequest';
+
 import { api } from '../../service/api';
 
 import {
@@ -33,41 +36,7 @@ import {
   Footer,
 } from './styles';
 
-interface Props {
-  orderNumber: string;
-  order_id: string;
-}
 
-export interface ICategory {
-  name: string;
-  id: string;
-}
-
-export interface IProduct {
-  name: string;
-  id: string;
-  description: string;
-  banner: string;
-  price: string | number;
-}
-
-export interface IProductSelected {
-  name: string;
-  id: string;
-  description: string;
-  price: string | number;
-}
-
-
-export interface IRequest {
-  id: string;
-  product_id: string;
-  name: string;
-  price: string | number;
-  amount: string | number;
-  description: string;
-  acc: number;
-}
 
 export function OrderDetails() {
   const theme = useTheme();
@@ -93,14 +62,14 @@ export function OrderDetails() {
 
   async function handleDeleteOrder() {
     try {
-      
-      const deleteItems = await api.delete('/order/item', {
+
+       await api.delete('/order/item', {
         params: {
           order_id,
         }
       })
-      
-      const response = await api.delete('/order', {
+
+      await api.delete('/order', {
         params: {
           order_id: order_id,
         }
@@ -145,33 +114,28 @@ export function OrderDetails() {
       const newProduct = [...oldArray];
       const itemIndex = oldArray.findIndex(item => item.product_id === productSelected.id);
 
-      if (itemIndex < 0) {        
+      if (itemIndex < 0) {
         return [...newProduct, {
           ...data,
           acc: Number(data.price) * Number(data.amount)
         }]
-      
-      
+
+
       }
       const item = newProduct[itemIndex]
 
       newProduct[itemIndex] = {
-          name: item.name,
-          description: item.description,
-          id: item.id,
-          product_id: item.product_id,
-          amount: Number(item.amount) + Number(amount),
-          price: Number(item.price),
-          acc: Number(item.price) * (Number(item.amount) + Number(amount)),
-        }
-
+        name: item.name,
+        description: item.description,
+        id: item.id,
+        product_id: item.product_id,
+        amount: Number(item.amount) + Number(amount),
+        price: Number(item.price),
+        acc: Number(item.price) * (Number(item.amount) + Number(amount)),
+      }
 
       return newProduct;
-
     });
-
-
-
 
   }
 
@@ -205,9 +169,7 @@ export function OrderDetails() {
 
       setCategories(response.data);
       setCategorySelected(response.data[0]);
-
     }
-
     getCategories()
 
   }, [])
@@ -222,14 +184,11 @@ export function OrderDetails() {
 
       setProduct(response.data);
       setProductSelected(response.data[0]);
-
     }
 
     getProductsSelected();
 
-
   }, [categorySelected])
-
 
   return (
     <Container>
@@ -302,7 +261,6 @@ export function OrderDetails() {
               handleDeleteProduct={handleDeleteProduct}
             />
           )}
-
         />
 
       </Main>

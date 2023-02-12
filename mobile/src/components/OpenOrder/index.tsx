@@ -21,14 +21,9 @@ import {
   WrapperButton,
 } from './styles';
 
+import { Props } from './types';
 
-interface IOpenOrder {
-  visible: boolean;
-  setVisible: (value: boolean) => void;
-}
-
-
-export function OpenOrder({ setVisible, visible }: IOpenOrder) {
+export function OpenOrder({ setVisible, visible }: Props) {
   const theme = useTheme();
   const [numberOrder, setNumberOrder] = useState('');
   const navigation = useNavigation();
@@ -52,9 +47,6 @@ async function handleDetailsOrder(){
   }
 
 }
-
-
-
   return (
     <Container>
       <Main>
@@ -87,8 +79,6 @@ async function handleDetailsOrder(){
           fontSize={18}
         />
         </WrapperButton>
-
-  
 
       </Main>
 

@@ -6,15 +6,11 @@ import { useAuth } from '../../context/AuthContext';
 
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';
-import { Text } from '../../components/Text';
 
 import {
   Container,
   Logo,
-  Footer,
-  ButtonSignUp,
 } from './styles';
-
 
 export function SignIn() {
   const theme = useTheme();
@@ -26,7 +22,6 @@ export function SignIn() {
     if(email === '' || password === ''){
       return;
     }
-
     await signIn({email, password});
   }
 
@@ -72,20 +67,6 @@ export function SignIn() {
         onPress={handleLogin}
         isLoading={loadingAuth}
       />
-
-
-      {/* <Footer>
-        
-        <Text size={15}>
-         Não possui uma conta?
-        </Text>
-        <ButtonSignUp>
-          <Text size={15}>Crie uma</Text> 
-        </ButtonSignUp>
-
-      </Footer> */}
-
-
 
     </Container>
   );

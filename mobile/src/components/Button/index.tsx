@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { TouchableOpacityProps } from 'react-native';
 import { useTheme } from 'styled-components';
+import {PropsButton} from './types';
 
 import {
   Container,
@@ -10,21 +10,6 @@ import {
   WrapperElements
 } from './styles';
 import { Text } from '../Text';
-
-
-interface PropsButton extends TouchableOpacityProps {
-  marginTop?: number;
-  backgroundColor?: string;
-  title: string;
-  disabled?: boolean;
-  isLoading?: boolean;
-  width?: number;
-  height?: number;
-  fontSize?: number;
-  icon?: boolean;
-  colorFont?: string;
-  fontTitle?: string;
-}
 
 export function Button({
   marginTop,
@@ -74,10 +59,7 @@ export function Button({
             />
             }
           </WrapperElements>
-
       }
-
-
 
     </Container>
   );

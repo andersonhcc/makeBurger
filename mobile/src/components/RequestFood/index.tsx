@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { useTheme } from 'styled-components';
 
 import { Text } from '../Text';
 
-import { IRequest } from '../../screens/OrderDetails';
 import { IconDelete } from '../../screens/OrderDetails/styles';
 
-import { api } from '../../service/api';
+import { Props } from './types';
 
 import {
   Container,
@@ -16,15 +15,6 @@ import {
   WrapperAmount,
   ButtonDelete,
 } from './styles';
-import { Alert } from 'react-native';
-
-
-interface Props {
-  data: IRequest
-  handleDeleteProduct: (item_id: string) => void;
-}
-
-
 
 export function RequestFood({ data, handleDeleteProduct }: Props) {
   const theme = useTheme();
@@ -32,7 +22,6 @@ export function RequestFood({ data, handleDeleteProduct }: Props) {
   async function handleDelete(){
     handleDeleteProduct(data.id);
   }
-
 
   return (
     <Container>

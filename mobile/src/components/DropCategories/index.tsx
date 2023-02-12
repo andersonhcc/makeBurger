@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { Text } from '../Text';
-import { ICategory } from '../../screens/OrderDetails';
+import { ICategory } from '../../screens/OrderDetails/types';
 
+import { Props } from './types';
 
 import {
   Container,
@@ -11,19 +12,11 @@ import {
   ButtonCategory
 } from './styles';
 
-
-interface Props {
-  categories: ICategory[];
-  setVisibleDrop: () => void;
-  setCategorySelected: (value: ICategory) => void;
-}
-
 export function DropCategories({
   categories,
   setVisibleDrop,
   setCategorySelected
 } : Props) {
-
 
   function handleCategorySelected(item: ICategory){
     setCategorySelected({

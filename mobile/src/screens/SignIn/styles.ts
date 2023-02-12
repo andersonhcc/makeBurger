@@ -13,12 +13,3 @@ export const Logo = styled.Image`
   height: 58px;
   margin-bottom: 60px;
 `;
-
-export const Footer = styled.View`
-  padding-top: 10%;
-  flex-direction: row;
-`;
-
-export const ButtonSignUp = styled.TouchableOpacity`
-  margin-left: 5px;
-`;

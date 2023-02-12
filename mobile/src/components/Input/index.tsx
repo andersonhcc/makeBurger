@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { TextInputProps } from 'react-native';
-
 
 import { useTheme } from 'styled-components';
 
@@ -13,15 +11,12 @@ import {
   BoxInput,
 } from './styles';
 
-export interface PropsInput extends TextInputProps {
-  iconName: string;
-}
-
+import { Props } from './types';
 
 export function Input({
   iconName, 
   secureTextEntry,
-  ...props} : PropsInput) {
+  ...props} : Props) {
   const theme = useTheme();
 
   const [sec, setSec] = useState(secureTextEntry)

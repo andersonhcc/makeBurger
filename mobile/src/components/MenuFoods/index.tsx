@@ -1,14 +1,11 @@
 import React from 'react';
 import { FlatList } from 'react-native';
 
-import { IProductSelected } from '../../screens/OrderDetails';
-
 import { Text } from '../Text';
 
 import { useTheme } from 'styled-components';
 
-import { IProduct } from '../../screens/OrderDetails';
-
+import { IProductSelected } from '../../screens/OrderDetails/types';
 
 import {
   Container,
@@ -20,11 +17,7 @@ import {
   ImageFood,
 } from './styles';
 
-interface Props {
-  product: IProduct[];
-  setProductSelected: (value: IProductSelected) => void;
-  setVisibleMenu: () => void;
-}
+import { Props } from './types';
 
 export function MenuFoods({
   product,
@@ -43,7 +36,6 @@ export function MenuFoods({
     })
     setVisibleMenu();
   }
-
 
   return (  
     <Container>
@@ -73,10 +65,8 @@ export function MenuFoods({
           ItemSeparatorComponent={() => (
             <SeparatorComponent />
           )}
-
         
         />
-
 
       </Main>
 

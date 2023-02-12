@@ -7,7 +7,7 @@ import { useTheme } from 'styled-components';
 
 import { Button } from '../../components/Button';
 
-import Animated, { useAnimatedStyle, useSharedValue, withDelay, withSpring, withTiming } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import {
   Container,
@@ -31,17 +31,12 @@ export function Dashboard() {
   const theme = useTheme();
   const navigation = useNavigation();
 
-
   const container = useSharedValue({ x: 0, o: 0 })
-
-  const requestButton = useSharedValue({ x: 0 })
-
 
   const show = {
     container: () => {
       container.value = { ...container.value, x: ww, o: 1 }
     },
-
   }
 
   const anm = {
@@ -51,7 +46,6 @@ export function Dashboard() {
       }
     })
   }
-
 
   const read = {
     init: () => {
@@ -112,8 +106,6 @@ export function Dashboard() {
 
       </Animated.View>
 
-
-
       <Modal
         visible={visible}
         transparent={true}
@@ -125,7 +117,6 @@ export function Dashboard() {
         visible={visible}
 
       />
-
       </Modal>
 
     </Container >
